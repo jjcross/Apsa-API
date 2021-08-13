@@ -1,12 +1,15 @@
-const addresses = require("../addresses/projectOne")
-const projectOneAbi = require("../abi/projectOneAbi.json")
-const numeral = require("numeral")
-const db = require("./db")
+const addresses = require("../addresses/projectOne") // Get all relevant Ethereum and BSC addresses
+const projectOneAbi = require("../abi/projectOneAbi.json") // Get the token ABI for the project. ABIs can be found on the Etherscan page for the contract if the contract has been verified. Otherwise you may need to ask your Solidity dev for it.
+const numeral = require("numeral") // NPM package for formatting numbers
+const db = require("./db") // Util for setting up DB and main DB methods
 
-const getprojectOneData = async (web3s) => {
+// Async function which takes in web3 collection, makes web3 calls to get current on chain data, formats data, and caches formatted data to MongoDB
+const getProjectOneData = async (web3s) => {
+    // Unpack web3 objects for Ethereum and BSC
     const {web3, bsc_web3} = web3s
-    
+    // Get Ethereum block number 
     const blockNumber = await web3.eth.getBlockNumber()
+    // Get BSC block number - error handling used here due to unreliable BSC endpoints, best to add it for the Ethereum block number as well in production.
     let bsc_blockNumber
     try {
         bsc_blockNumber = await bsc_web3.eth.getBlockNumber() 
@@ -16,13 +19,17 @@ const getprojectOneData = async (web3s) => {
         console.log("CANT GET bsc_blockNumber")
         console.log(err)
     }
+    // Collect addresses in one 'addresses' object
     const {eth_addresses, bsc_addresses} = addresses
     // Set number formatting default
     numeral.defaultFormat("0,0");
-  
 
     // Instantiate all smart contract object(s)
+
+    // web3.eth.Contract() creates a smart contract object using the ABI and address of the contract which allows you to call all the smart contract functions listed in the ABI. Since we are not supplying a private key to our web3 object, we can only use it for reading on chain data, not for anything requiring signing - which is all we need for this project.
+    // Here we instantiate the Ethereum smart contract object
     let projectOne = new web3.eth.Contract(projectOneAbi, eth_addresses.contract)
+    // Here we instantiate the BSC smart contract object
     let bsc_projectOne
     try {
         bsc_projectOne = new bsc_web3.eth.Contract(projectOneAbi, bsc_addresses.contract)
@@ -32,12 +39,12 @@ const getprojectOneData = async (web3s) => {
         console.log(err)
     }
     
-    // For converting to proper number of decimals
+    // For converting to proper number of decimals. We use this to convert from raw numbers returned from web3 calls to human readable formatted numbers based on the decimals for each token.  
     const convert = (num, decimal) => {
         return Math.round((num / (10*10**(decimal-3))))/100
-     }
+    }
 
-    // Make tokenData object
+    // Make tokenData object. This object is used for storing formatted and calculated results from web3 calls from both Ethereum and BSC web3 objects. It is divided into 3 sections for data on BSC, Ethereum, and aggregate data from both chains in 'combined'.
 
     let tokenData = {
         combined: {
@@ -95,8 +102,9 @@ const getprojectOneData = async (web3s) => {
         bsc_team_2 = err
     }
 
-     
-     // Get derived values ETH
+    // In the following section we perform calculations on base values returned from web3 calls to get the final values we want to return in our API.
+    
+    // Get derived values ETH
     const team_eth = Number(team_1) + Number(team_2) + Number(team_3)
     tokenData.eth.totalSupply.value -= burnt_on_eth
     tokenData.eth.circulatingSupply.value = Number(tokenData.eth.totalSupply.value) - Number(team_eth)
@@ -110,8 +118,9 @@ const getprojectOneData = async (web3s) => {
     tokenData.combined.totalSupply.value = tokenData.bsc.totalSupply.value + tokenData.eth.totalSupply.value 
     tokenData.combined.circulatingSupply.value = Number(tokenData.bsc.circulatingSupply.value) + Number(tokenData.eth.circulatingSupply.value)
        
-    // Set up descriptions
-  
+    // Below we add additional information which is not strictly necessary if the API is used only for CG and CMC listing, but may be desired for other purposes such as a token dashboard.
+
+    // Set up descriptions 
     tokenData.eth.totalSupply.description = "Total supply of projectOne on ETH"
     tokenData.bsc.totalSupply.description = "Total supply of projectOne on BSC"
   
@@ -132,12 +141,13 @@ const getprojectOneData = async (web3s) => {
     tokenData.combined.totalSupply.name = "Total Supply of projectOne on (BSC & ETH)"
     tokenData.combined.circulatingSupply.name = "Circulating Supply of projectOne on (BSC & ETH)"
   
-  
      
     // Set converted and formatted value, block, and timestamp
     const tokendata_eth = tokenData.eth
     const tokendata_bsc = tokenData.bsc
     const tokendata_combined = tokenData.combined
+
+    // Below we run through each of our tokendata objects for both chains and the combined chain data and convert or format when needed. We als add block number and date.
 
     Object.keys(tokendata_combined).forEach(key => {
         tokendata_combined[key].value = convert(tokendata_combined[key].value, 18)
@@ -163,10 +173,8 @@ const getprojectOneData = async (web3s) => {
 
     })
   
-    //!!!!!!!!---------REFACTOR----------!!!!!! 
-    
+    // Finally after all data has been collected and formatted, we set up our database object and call db.updateprojectOneData() in order to cache our data in our MongoDB database.
 
-    
     try {
       const client = db.getClient()
       db.updateprojectOneData(tokenData, client) 
@@ -174,7 +182,6 @@ const getprojectOneData = async (web3s) => {
     catch(err) {
       console.log(err)
     }
-    return tokenData
   }
 
-  module.exports = getprojectOneData
+  module.exports = getProjectOneData

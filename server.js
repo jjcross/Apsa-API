@@ -8,13 +8,15 @@ const db = require('./utils/db')
 
 const projectTwoRoutes = require('./routes/projectTwo')
 const projectOneRoutes = require('./routes/projectOne')
-const getReady = require('./utils/getReady')
+const getChainData = require("./utils/getChainData")
 const removeTrailingSlash = require('./middleware/removeTrailingSlash');
 
 
 const PORT = process.env.PORT || 3001
 
-getReady() 
+// Call getChainData here to begin chain data update loop and start caching new data to database
+getChainData() 
+
 const app = express()
 
 // Limit request rate

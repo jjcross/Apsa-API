@@ -3,7 +3,7 @@ const projectTwoAbi = require("../abi/projectTwoAbi.json")
 const numeral = require("numeral")
 const db = require("./db")
 
-const getprojectTwoData = async (web3s) => {
+const getProjectTwoData = async (web3s) => {
     const {bsc_web3} = web3s
     const bsc_blockNumber = await bsc_web3.eth.getBlockNumber() 
     const {projectTwo_addresses} = addresses
@@ -74,7 +74,6 @@ const getprojectTwoData = async (web3s) => {
     catch(err) {
       console.log(err)
     }
-    return tokenData
   }
 
-  module.exports = getprojectTwoData
+  module.exports = getProjectTwoData

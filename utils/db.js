@@ -4,8 +4,6 @@ const MongoClient = require('mongodb').MongoClient
 
 const initializeClient = () => {
     try {
-        // const uri=`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.gzsvn.mongodb.net/fomo?retryWrites=true&w=majority`
-        
         const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.it21v.mongodb.net/fomo?retryWrites=true&w=majority`
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true  })
         client.connect()

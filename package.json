@@ -1,5 +1,5 @@
 {
-  "name": "fnx-api",
+  "name": "Token-Data-API",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noahniuwa/fnx-api.git"
+    "url": "git+https://github.com/noahniuwa/Token-Data-API.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/noahniuwa/fnx-api/issues"
+    "url": "https://github.com/noahniuwa/Token-Data-API/issues"
   },
-  "homepage": "https://github.com/noahniuwa/fnx-api#readme",
+  "homepage": "https://github.com/noahniuwa/Token-Data-API#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "coingecko-api": "^1.0.10",
