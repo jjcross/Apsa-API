@@ -1,0 +1,9 @@
+{
+    "app_id": "apsa-1-xseqe",
+    "config_version": 20210101,
+    "name": "Apsa-1",
+    "location": "DE-FF",
+    "provider_region": "gcp-europe-west1",
+    "deployment_model": "LOCAL",
+    "environment": "testing"
+}
