@@ -1,1 +1,18 @@
-{}
+{
+    "custom-token": {
+        "name": "custom-token",
+        "type": "custom-token",
+        "config": {
+            "audience": [],
+            "requireAnyAudience": false,
+            "signingAlgorithm": "RS256",
+            "useJWKURI": false
+        },
+        "secret_config": {
+            "signingKeys": [
+                "43ba21f972424ba1b04ce4987b777ce6"
+            ]
+        },
+        "disabled": false
+    }
+}
