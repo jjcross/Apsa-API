@@ -1,1 +1,7 @@
-[]
+[
+    {
+        "name": "getPriceData",
+        "private": false,
+        "run_as_user_id_script_source": "exports = function(payload) {\n  /*\n    This function should return the id of a user to run the webhook as. For example:\n    if (payload.condition) {\n     return \"5a3db0b88b1f2cabd68ed4d9\";\n    }\n    return \"5908ffd3d383ad67b0fff290\";\n  */\n};"
+    }
+]
