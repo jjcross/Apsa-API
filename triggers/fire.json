@@ -1,0 +1,28 @@
+{
+    "id": "63b46ecd697fbf0168223b9d",
+    "name": "fire",
+    "type": "DATABASE",
+    "config": {
+        "operation_types": [
+            "UPDATE"
+        ],
+        "database": "aspaDB",
+        "collection": "price",
+        "service_name": "Cluster0",
+        "match": {},
+        "project": {},
+        "full_document": false,
+        "full_document_before_change": false,
+        "unordered": false,
+        "skip_catchup_events": false,
+        "tolerate_resume_errors": false
+    },
+    "disabled": false,
+    "event_processors": {
+        "FUNCTION": {
+            "config": {
+                "function_name": "getPriceData"
+            }
+        }
+    }
+}
