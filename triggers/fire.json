@@ -7,12 +7,12 @@
             "UPDATE"
         ],
         "database": "aspaDB",
-        "collection": "price",
+        "collection": "getPriceData",
         "service_name": "Cluster0",
-        "match": {},
-        "project": {},
-        "full_document": false,
-        "full_document_before_change": false,
+        "match": "$match",
+        "project": "63b5c188ea739a7a9279c8ce",
+        "full_document": true,
+        "full_document_before_change": true,
         "unordered": false,
         "skip_catchup_events": false,
         "tolerate_resume_errors": false
