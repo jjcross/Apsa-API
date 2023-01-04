@@ -2,6 +2,6 @@
     "enabled": true,
     "mongo_service_name": "Cluster0",
     "database_name": "aspaDB",
-    "collection_name": "getChainData",
+    "collection_name": "getProjectTwoData",
     "user_id_field": "apsat"
 }
