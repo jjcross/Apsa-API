@@ -1,6 +1,6 @@
 [
     {
-        "route": "/apsa-1-xseqe",
+        "route": "/mongodb://_:<API-KEY>@europe-west1.gcp.realm.mongodb.com:27020/?authMechanism=PLAIN&authSource=%24external&ssl=true&appName=apsa-1-xseqe:mongodb-atlas:api-key",
         "http_method": "POST",
         "function_name": "getPriceData",
         "validation_method": "NO_VALIDATION",
