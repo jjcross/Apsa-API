@@ -1,6 +1,6 @@
 [
     {
-        "route": "/Apsa",
+        "route": "/apsa-1-xseqe",
         "http_method": "POST",
         "function_name": "getPriceData",
         "validation_method": "NO_VALIDATION",
