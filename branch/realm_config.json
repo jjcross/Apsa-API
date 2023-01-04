@@ -5,5 +5,5 @@
     "location": "DE-FF",
     "provider_region": "gcp-europe-west1",
     "deployment_model": "LOCAL",
-    "environment": "testing"
+    "environment": "production"
 }
