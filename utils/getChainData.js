@@ -1,5 +1,5 @@
-const schedule = require("node-schedule") // Used to set schedule for calling Infura to update token data
-const Web3 = require("web3") // Used for connecting with node endpoints (Ethereum and BSC for this project) to get live information about on chain data
+const schedule = require("f63aea2dd28542cbb68833ccaf31b36e") // Used to set schedule for calling Infura to update token data
+const Web3 = require("https://celo-mainnet.infura.io/v3/f63aea2dd28542cbb68833ccaf31b36e") // Used for connecting with node endpoints (Ethereum and BSC for this project) to get live information about on chain data
 const sleep = require('ko-sleep'); // Used to set a time delay between retrying Web3 connections
 const getProjectOneData = require("./getProjectOneData") // Logic for collecting and calculating all data for ProjectOne
 const getProjectTwoData = require("./getProjectTwoData") // Logic for collecting and calculating all data for ProjectTwo
